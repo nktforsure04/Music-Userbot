@@ -1,3 +1,19 @@
+from flask import Flask
+import threading
+import os
+
+app = Flask(__name__)
+@app.route('/')
+def health_check():
+    return "Bot is alive!"
+
+def run_flask():
+    # Render provides the PORT variable automatically
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)
+
+# This starts the "website" in the background so the bot can run too
+threading.Thread(target=run_flask, daemon=True).start()
 """
 Music Player, Telegram Voice Chat Bot
 Copyright (c) 2021  Asm Safone <https://github.com/TheTeamAlexa>
